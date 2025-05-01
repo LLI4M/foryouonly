@@ -11,11 +11,9 @@
       background-color: #fff0f5;
       overflow: hidden;
     }
-
     h1 {
       font-size: 2em;
     }
-
     .btn {
       padding: 10px 20px;
       margin: 10px;
@@ -26,13 +24,11 @@
       transition: 0.3s;
       position: absolute;
     }
-
     #yes {
       background-color: #4caf50;
       color: white;
       position: static;
     }
-
     .no-btn {
       background-color: #f44336;
       color: white;
@@ -43,44 +39,31 @@
   <h1>Do you love me?</h1>
   <button id="yes" class="btn" onclick="alert('I love you too! 😊')">Yes</button>
   <button id="no" class="btn no-btn">No</button>
-
-  <audio id="sound" src="https://www.myinstants.com/media/sounds/trollolol.mp3"></audio>
+  <audio id="sound" src="https://www.myinstants.com/media/sounds/trololo.mp3"></audio>
 
   <script>
     const noBtn = document.getElementById('no');
     const sound = document.getElementById('sound');
 
     function randomPosition(btn) {
-      const x = Math.random() * (window.innerWidth - 100);
-      const y = Math.random() * (window.innerHeight - 50);
+      const x = Math.random() * (window.innerWidth - 120);
+      const y = Math.random() * (window.innerHeight - 60);
       btn.style.left = `${x}px`;
       btn.style.top = `${y}px`;
     }
 
-    noBtn.addEventListener('click', () => {
-      // Play sound
+    function addNoButton(event) {
       sound.currentTime = 0;
       sound.play();
 
-      // Clone the "No" button
-      const clone = noBtn.cloneNode(true);
-      clone.addEventListener('click', () => {
-        sound.currentTime = 0;
-        sound.play();
-        randomPosition(clone);
-
-        const newClone = clone.cloneNode(true);
-        newClone.addEventListener('click', arguments.callee);
-        document.body.appendChild(newClone);
-        randomPosition(newClone);
-      });
+      const clone = event.target.cloneNode(true);
+      clone.addEventListener('click', addNoButton);
       document.body.appendChild(clone);
       randomPosition(clone);
-    });
+    }
 
-    noBtn.addEventListener('mouseover', () => {
-      randomPosition(noBtn);
-    });
+    noBtn.addEventListener('click', addNoButton);
+    noBtn.addEventListener('mouseover', () => randomPosition(noBtn));
   </script>
 </body>
 </html>
